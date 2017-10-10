@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Do Exam</title>
+</head>
+
+<body>
+  <form method="post" action="/ayoujian/periksa">
+    <div id="content">
+      <%
+      soals.forEach((soal, index)=>{
+        var jawaban = [];
+        jawaban.push(soal.answer1)
+        jawaban.push(soal.answer2)
+        jawaban.push(soal.answer3)
+        jawaban.push(soal.answer4)
+    %>
+        <div class="asd page<%= index %>">
+          <p>
+            <%= soal.question %>
+          </p>
+          <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][0]] %>">
+          <%= jawaban[randomJawaban[index][0]] %>
+            <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][1]] %>">
+            <%= jawaban[randomJawaban[index][1]] %>
+              <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][2]] %>">
+              <%= jawaban[randomJawaban[index][2]] %>
+                <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][3]] %>">
+                <%= jawaban[randomJawaban[index][3]] %>
+                </div>
+                  <%
+      })
+    %>
+    </div>
+    <div class="next">Next</div>
+    <div class="prev">Prev</div>
+    <input type="submit" value="SUBMIT">
+    </form>
+          <script src = "https://code.jquery.com/jquery-1.12.4.min.js">
+        </script>
+        <script>
+          $(document).ready(function() {
+            var page = 0;
+            $(".asd").hide();
+            $(".page0").show();
+            $('.next').on('click',function(){
+              $('.page' + page).hide();
+              $('.page' + ++page).show();
+            })
+            $('.prev').on('click',function(){
+              $('.page' + page).hide();
+              $('.page' + --page).show();
+            })
+          }); // end $(document).ready method
+        </script>
+</body>
+
+</html>

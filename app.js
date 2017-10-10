@@ -5,6 +5,7 @@ const session = require('express-session');
 const index = require('./routes/indexRoute');
 const auth = require('./routes/authRoute');
 const user = require('./routes/userRoute');
+const doExam = require('./routes/doExamRoute');
 
 const question = require('./routes/questionRoute.js')
 const exam = require('./routes/examRoute.js')
@@ -21,6 +22,7 @@ app.use(session({
 
 app.use('/questions', question)
 app.use('/exams', exam)
+app.use('/ayoujian', doExam)
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
