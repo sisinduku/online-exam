@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+    <link rel="stylesheet" href="/css/signin.css">
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="container">
+      <% if(err) { %>
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <%= err %>
+          </div>
+        </div>
+        <br>
+      <% } %>
+      <form class="form-signin" action="/auth/login" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button><br>
+        <p class="text-center">Or</p>
+        <a href="/auth/signup"><button class="btn btn-lg btn-primary btn-block" type="button">Sign up</button></a>
+      </form>
+    </div> <!-- /container -->
+    <% include ./partials/footer %>
+  </body>
+</html>
