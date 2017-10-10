@@ -4,15 +4,27 @@ const sequelize = require('sequelize');
 const router = express.Router();
 const ExamCtrl = require('../controllers/examCtrl');
 
-router.get('/', function(req, res) {
+router.post('/', function(req, res) {
+  let idDanJumlah = req.body.exam.split('hubahuba');
+  req.session.examId = idDanJumlah[0];
+  req.session.jumlahSoal = idDanJumlah[1];
   if(!req.session.hasOwnProperty('dataSoal')) {
-    model.Question.findAll({
+    model.ExamQuestion.findAll({
+      include:[
+        {
+          model:model.Question,
+        }
+      ],
       order: [
         [sequelize.fn('RANDOM')]
       ],
-      limit: 3
+      where: {
+        examId:idDanJumlah[0]
+      },
+      limit: idDanJumlah[1]
     }).then((data) => {
-      req.session.dataSoal = data;
+      let listQuestion = data.map((question)=>{ return question.Question});
+      req.session.dataSoal = listQuestion;
       var randomedJawaban = [];
       for(let i = 0;i<3;i++) {
         let temp = []
@@ -28,7 +40,7 @@ router.get('/', function(req, res) {
         randomedJawaban.push(temp);
       }
       req.session.randomJawaban = randomedJawaban;
-      res.render('doExam', {soals:req.session.dataSoal, randomJawaban:req.session.randomJawaban})
+      res.render('doExam', {soals:req.session.dataSoal, randomJawaban:req.session.randomJawaban, title:'Do Exam', page:'exam-nav', session:req.session})
       // res.render('doExam', {
       //   data
       // });
@@ -36,21 +48,29 @@ router.get('/', function(req, res) {
   }
   else {
     console.log(req.session.randomJawaban);
-    res.render('doExam', {soals:req.session.dataSoal, randomJawaban:req.session.randomJawaban});
+    res.render('doExam', {soals:req.session.dataSoal, randomJawaban:req.session.randomJawaban, title:'Do Exam', page:'exam-nav', session:req.session});
   }
 })
 
 router.post('/periksa', function(req, res){
-  var score = 0;
+  var benar = 0;
   var kumpulanJawaban = [];
-
   req.session.dataSoal.forEach((apa, index)=>{
     if(apa.answer1 == req.body["jawaban"+index]){
-      score++;
+      benar++;
     }
   })
-  console.log(score);
-  res.send(req.body)
+  var score = (benar*100)/req.session.jumlahSoal;
+  model.User.findOne({where:{
+    username:req.session.username
+  }}).then((user)=>{
+    var obj = {
+      userId:user.id,
+      examId:req.session.examId,
+      score:score
+    }
+    res.send(obj)
+  })
 })
 
 module.exports = router;
