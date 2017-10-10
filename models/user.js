@@ -44,5 +44,16 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+  User.associate = function(model) {
+    User.hasMany(model.Result, {
+      foreignKey: 'userId',
+      sourceKey: 'id'
+    });
+    User.belongsToMany(model.Exam, {
+      through: 'Result',
+      foreignKey: 'userId',
+      otherKey: 'examId',
+    })
+  }
   return User;
 };

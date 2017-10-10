@@ -14,5 +14,12 @@ router.get('/logout', (req, res) => {
   AuthCtrl.logout(req, res);
 });
 
+router.get('/unauthorized', (req, res) => {
+  res.render('unauthorized', {
+    title: 'Not Authorized',
+    page: 'home-nav',
+    session: req.session,
+  });
+});
 
 module.exports = router;

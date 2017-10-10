@@ -35,4 +35,8 @@ router.get('/delete/:userId', (req, res) => {
   UserCtrl.deleteUser(req, res);
 });
 
+router.get('/take_exam', (req, res) => {
+  UserCtrl.takeExamForm(req, res, {});
+});
+
 module.exports = router;

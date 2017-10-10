@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="container">
+      <h2><%= title %></h2>
+      <% if(err) { %>
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <%= err.hasOwnProperty('message') ? err.message : err  %>
+          </div>
+        </div>
+        <br>
+      <% } %>
+      <form action="/ayoujian" method="post">
+        <div class="form-group">
+          <label for="username">Choose Exam</label>
+          <select class="form-control" name="exam" required>
+            <option disabled selected>Please Choose Exam</option>
+            <% exams.forEach(exam => { %>
+              <option value="<%= exam.id %>"><%= exam.examName %></option>
+            <% }) %>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <% include ./partials/footer %>
+  </body>
+</html>

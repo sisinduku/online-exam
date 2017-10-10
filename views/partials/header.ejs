@@ -15,8 +15,9 @@
         <li id="question-nav" class="nav-item">
           <a class="nav-link" href="/questions/">Questions</a>
         </li>
+      <%} else if(session.role === 'user') { %>
         <li id="exam-nav" class="nav-item">
-          <a class="nav-link" href="/exams/">Exams</a>
+          <a class="nav-link" href="/users/take_exam">Take Exam</a>
         </li>
       <%}%>
       <% if(!session.role) { %>

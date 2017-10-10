@@ -1,4 +1,5 @@
 const model = require('../models');
+const sequelize = require('sequelize');
 
 class UserCtrl {
   static getUsers(req, res) {
@@ -83,6 +84,47 @@ class UserCtrl {
       })
       .catch(reason => {
         console.log(reason);
+      })
+  }
+
+  static takeExamForm(req, res, param) {
+    // select max("Exams"."examName") as name, max("Exams"."jumlahSoal") as jumlahsoal, "examId" , count(*) as total_exam from "ExamQuestions" left join "Exams" on "Exams".id = "ExamQuestions"."examId" group by "ExamQuestions"."examId"
+    // model.Exam.findAll({
+    //     attributes: {
+    //       exclude: [
+    //         'Exams.createdAt',
+    //         'Exams.updatedAt', [model.sequelize.fn('MAX', model.sequelize.col('Exams.jumlahSoal'))]
+    //       ],
+    //       include: [
+    //         [model.sequelize.fn('COUNT', model.sequelize.col('ExamQuestions.examId')), 'total']
+    //       ]
+    //     },
+    //     include: [{
+    //       model: model.ExamQuestion,
+    //       attributes: ['examId']
+    //     }],
+    //     group: ['ExamQuestions.examId', 'Exam.id', 'ExamQuestions.id']
+    //   })
+    //   .then(exams => {
+    //     res.send(exams);
+    //   })
+    //   .catch(reason => {
+    //     console.log(reason);
+    //   })
+    model.Exam.findAll({
+        include: 'ExamQuestions'
+      })
+      .then(exams => {
+        let result = exams.filter((exam, index) => {
+          return exam.dataValues.ExamQuestions.length >= exam.dataValues.jumlahSoal;
+        })
+        res.render('form_choose_exam', {
+          exams: result,
+          title: 'Choose Exam',
+          page: 'exam-nav',
+          err: param.hasOwnProperty('err') ? param.err : null,
+          session: req.session,
+        });
       })
   }
 }
