@@ -4,5 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     examName: DataTypes.STRING,
     jumlahSoal: DataTypes.INTEGER
   });
+  Exam.associate = function(model) {
+    Exam.hasMany(model.ExamQuestion, {
+      foreignKey: 'examId',
+      sourceKey: 'id',
+    })
+  }
   return Exam;
 };

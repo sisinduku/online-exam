@@ -3,13 +3,13 @@ const router = express.Router();
 const UserCtrl = require('../controllers/userCtrl');
 const checkPrivilege = require('../helpers/checkPrivilege');
 const checkAuth = require('../helpers/checkAuth');
-
-router.use((req, res, next) => {
-  checkAuth(req, res, next);
-});
-router.use((req, res, next) => {
-  checkPrivilege(req, res, next);
-});
+//
+// router.use((req, res, next) => {
+//   checkAuth(req, res, next);
+// });
+// router.use((req, res, next) => {
+//   checkPrivilege(req, res, next);
+// });
 
 router.get('/', (req, res) => {
   UserCtrl.getUsers(req, res);
@@ -33,6 +33,10 @@ router.post('/add/:userId', (req, res) => {
 
 router.get('/delete/:userId', (req, res) => {
   UserCtrl.deleteUser(req, res);
+});
+
+router.get('/take_exam', (req, res) => {
+  UserCtrl.takeExamForm(req, res, {});
 });
 
 module.exports = router;
