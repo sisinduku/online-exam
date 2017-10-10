@@ -7,5 +7,16 @@ module.exports = (sequelize, DataTypes) => {
     answer3: DataTypes.STRING,
     answer4: DataTypes.STRING
   });
+  Question.associate = function(model) {
+    Question.hasMany(model.ExamQuestion, {
+      foreignKey: 'questionId',
+      sourceKey: 'id',
+    });
+    Question.belongsToMany(model.Exam, {
+      through: 'ExamQuestion',
+      foreignKey: 'questionId',
+      otherKey: 'examId',
+    });
+  }
   return Question;
 };

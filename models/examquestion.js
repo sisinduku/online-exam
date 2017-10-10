@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     ExamQuestion.belongsTo(model.Exam, {
       foreignKey: 'examId',
       sourceKey: 'id',
+    });
+    ExamQuestion.belongsTo(model.Question, {
+      foreignKey: 'questionId',
+      sourceKey: 'id'
     })
   }
   return ExamQuestion;
