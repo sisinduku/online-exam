@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const index = require('./routes/indexRoute');
+const auth = require('./routes/authRoute');
+const user = require('./routes/userRoute');
 
 const question = require('./routes/question.js')
 const exam = require('./routes/exam.js')
@@ -23,6 +26,9 @@ app.use('/exams', exam)
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 
+app.use('/', index);
+app.use('/auth', auth);
+app.use('/users', user);
 app.listen(process.env.PORT || 3000, () => {
   console.log('Hello from port: 3000');
 });
