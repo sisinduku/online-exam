@@ -39,4 +39,12 @@ router.get('/assign/:id', function(req, res){
   ExamCtrl.getAssignExam(req, res, {});
 })
 
+router.post('/assign/:id/delete', function(req, res){
+  ExamCtrl.removeQuestionExam(req, res, {});
+})
+
+router.post('/assign/:id/add', function(req, res){
+  ExamCtrl.addQuestionExam(req, res, {});
+})
+
 module.exports = router;

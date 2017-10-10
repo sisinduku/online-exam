@@ -16,61 +16,142 @@
         </div>
         <br>
         <% } %>
-          <table id="questions" class="display" width="100%" cellspacing="0">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>ID</th>
-                <th>Question</th>
-                <th>Answer 1(Right Answer)</th>
-                <th>Answer 2</th>
-                <th>Answer 3</th>
-                <th>Answer 4</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%
+          <div class="row">
+            <div class="col-md-6">
+              <form action="/exams/assign/<%= examId%>/delete" method="post">
+                <table id="questions" width="100%" class="display" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Check</th>
+                      <th>No</th>
+                      <th>ID</th>
+                      <th>Question</th>
+                      <th>Answer 1(Right Answer)</th>
+                      <th>Answer 2</th>
+                      <th>Answer 3</th>
+                      <th>Answer 4</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
         for(var i = 0;i<questions.length;i++) {
           %>
-                <tr>
-                  <td>
-                    <%= i+1 %>
-                  </td>
-                  <td>
-                    <%= questions[i].id %>
-                  </td>
-                  <td>
-                    <%= questions[i].question %>
-                  </td>
-                  <td>
-                    <%= questions[i].answer1 %>
-                  </td>
-                  <td>
-                    <%= questions[i].answer2 %>
-                  </td>
-                  <td>
-                    <%= questions[i].answer3 %>
-                  </td>
-                  <td>
-                    <%= questions[i].answer4 %>
-                  </td>
-                  <td>
-                    <a href="/questions/edit/<%= questions[i].id %>" title="Edit"><span class="fa fa-pencil" aria-hidden="true"></span></a> |
-                    <a onclick="return confirm('Are you sure?')" href="/questions/delete/<%= questions[i].id %>" title="Delete"><span class="fa fa-eraser" aria-hidden="true"></span></a>
-                  </td>
-                </tr>
-                <%
+                      <tr>
+                        <td>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="<%= questions[i].id %>" name="deletedId">Delete this
+                          </label>
+                          </div>
+                        </td>
+                        <td>
+                          <%= i+1 %>
+                        </td>
+                        <td>
+                          <%= questions[i].id %>
+                        </td>
+                        <td>
+                          <%= questions[i].question %>
+                        </td>
+                        <td>
+                          <%= questions[i].answer1 %>
+                        </td>
+                        <td>
+                          <%= questions[i].answer2 %>
+                        </td>
+                        <td>
+                          <%= questions[i].answer3 %>
+                        </td>
+                        <td>
+                          <%= questions[i].answer4 %>
+                        </td>
+                      </tr>
+                      <%
         }
       %>
-            </tbody>
-          </table>
-          <a href="/questions/add"><button type="button" class="btn btn-primary">Add Student</button></a>
+                  </tbody>
+                </table>
+                <input type="submit" value="Delete" class="btn btn-primary">
+              </form>
+            </div>
+            <div class="col-md-6">
+              <form action="/exams/assign/<%= examId %>/add" method="post">
+                <table id="availableQuestions" class="display" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Check</th>
+                      <th>No</th>
+                      <th>ID</th>
+                      <th>Question</th>
+                      <th>Answer 1(Right Answer)</th>
+                      <th>Answer 2</th>
+                      <th>Answer 3</th>
+                      <th>Answer 4</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%
+        for(var i = 0;i<exams.length;i++) {
+          %>
+                      <tr>
+                        <td>
+                          <div class="form-check">
+                            <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="<%= exams[i].id %>" name="addedId">Add this
+                          </label>
+                          </div>
+                        </td>
+                        <td>
+                          <%= i+1 %>
+                        </td>
+                        <td>
+                          <%= exams[i].id %>
+                        </td>
+                        <td>
+                          <%= exams[i].question %>
+                        </td>
+                        <td>
+                          <%= exams[i].answer1 %>
+                        </td>
+                        <td>
+                          <%= exams[i].answer2 %>
+                        </td>
+                        <td>
+                          <%= exams[i].answer3 %>
+                        </td>
+                        <td>
+                          <%= exams[i].answer4 %>
+                        </td>
+                      </tr>
+                      <%
+        }
+      %>
+                  </tbody>
+                </table>
+                <input type="submit" value="Add" class="btn btn-primary">
+              </form>
+            </div>
+          </div>
     </div>
     <% include ./partials/footer %>
       <script>
         $(document).ready(function() {
-          $('#questions').DataTable();
+          $('#availableQuestions').DataTable({
+            responsive: true,
+            scrollX: true,
+            scrollCollapse: true,
+            scrollY: '400px'
+          });
+        });
+      </script>
+      <script>
+        $(document).ready(function() {
+          $('#questions').DataTable({
+            responsive: true,
+            scrollX: true,
+            scrollCollapse: true,
+            scrollY: '400px'
+          });
         });
       </script>
 </body>

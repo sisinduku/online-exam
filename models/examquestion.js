@@ -4,5 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     examId: DataTypes.INTEGER,
     questionId: DataTypes.INTEGER
   });
+  ExamQuestion.associate = function(models){
+    
+  }
   return ExamQuestion;
 };

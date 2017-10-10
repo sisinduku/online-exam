@@ -1,4 +1,6 @@
 const model = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 class ExamCtrl {
   static getIndex(req, res, param) {
@@ -75,26 +77,72 @@ class ExamCtrl {
     })
   }
   static getAssignExam(req, res, param) {
-    Promise.all([
-      model.ExamQuestion.findAll({
-        where: {
-          examId:req.params.id
-        }
-      }),
-      model.Question.findAll({
-
+    model.ExamQuestion.findAll({
+      where: {
+        examId: req.params.id,
+      }
+    }).then((rows) => {
+      let unavailableQId = rows.map((row) => {
+        return row.questionId
+      });
+      Promise.all([
+        model.Question.findAll({
+          where: {
+            id: {
+              [Op.notIn]: unavailableQId
+            }
+          }
+        }),
+        model.Question.findAll({
+          where: {
+            id: {
+              [Op.in]: unavailableQId
+            }
+          }
+        })
+      ]).then((results) => {
+        res.render('assign_question', {
+          examId: req.params.id,
+          exams: results[0],
+          questions: results[1],
+          title: 'Assign Exam id ' + req.params.id,
+          err: (param.hasOwnProperty('err')) ? param.err : null,
+          page: 'exam-nav',
+          session: req.session,
+        })
       })
-    ]).then((results)=>{
-      res.render('assign_question', {
-        exams:results[0],
-        questions:results[1],
-        title: 'Assign Exam id ' + req.params.id,
-        err: (param.hasOwnProperty('err')) ? param.err : null,
-        page: 'exam-nav',
-        session: req.session,
+    }).catch((reason) => {
+      console.log(reason);
+    })
+  }
+  static removeQuestionExam(req, res, param) {
+    model.ExamQuestion.destroy({
+      where: {
+        questionId: {
+          [Op.in]: req.body.deletedId,
+        },
+        examId: req.params.id,
+      }
+    }).then((deleted) => {
+      res.redirect('/exams/assign/'+req.params.id+'?message=success');
+    }).catch((reason) => {
+      this.getAssignExam(req, res, {
+        err: reason.errors[0]
       })
     })
   }
+  static addQuestionExam(req, res, param) {
+    let arr_object = req.body.addedId.map((obj) => {
+      return {
+        questionId: obj,
+        examId: req.params.id
+      }
+    })
+    model.ExamQuestion.bulkCreate(arr_object).then((data)=>{
+      res.redirect('/exams/assign/'+req.params.id+'?message=success');
+    }).catch((reason)=>{
+      err:reason.errors[0]
+    })
+  }
 }
-
 module.exports = ExamCtrl;
