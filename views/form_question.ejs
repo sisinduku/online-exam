@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body>
+  <% include ./partials/header %>
+    <div class="container">
+      <h2><%= title %></h2>
+      <% if(err) { %>
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <%= err.message %>
+          </div>
+        </div>
+        <br>
+        <% }
+          let question = {}
+          if(hasOwnProperty('questions')){
+            question.question = questions.question
+            question.answer1 = questions.answer1
+            question.answer2 = questions.answer2
+            question.answer3 = questions.answer3
+            question.answer4 = questions.answer4
+
+        %>
+          <form action="/questions/edit/<%= questions.id %>" method="post">
+            <%
+      } else {
+        %>
+              <form action="/questions/add" method="post">
+                <%} %>
+                  <div class="form-group">
+                    <label for="question">Question</label>
+                    <input type="text" name="question" placeholder="Question Goes Here" required class="form-control" value="<%= question.question %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="answer1">Answer 1 (The Right Answer)</label>
+                    <input type="text" name="answer1" placeholder="Right Answer Goes Here" required class="form-control" value="<%= question.answer1 %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="answer2">Answer 2</label>
+                    <input type="text" name="answer2" placeholder="Other Answer" required class="form-control" value="<%= question.answer2 %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="answer3">Answer 3</label>
+                    <input type="text" name="answer3" placeholder="Other Answer" required class="form-control" value="<%= question.answer3 %>">
+                  </div>
+                  <div class="form-group">
+                    <label for="answer4">Answer 4</label>
+                    <input type="text" name="answer4" placeholder="Other Answer" required class="form-control" value="<%= question.answer4 %>">
+                  </div>
+                  <div class="form-group">
+                    <input class="btn btn-primary" type="submit" name="submit" value="Submit" class="form-control">
+                  </div>
+              </form>
+    </div>
+    <% include ./partials/footer %>
+</body>
+
+</html>
