@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ./partials/head %>
+</head>
+
+<body>
+  <% include ./partials/header %>
+    <div class="container">
+      <% if(err) { %>
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <%= err.message %>
+          </div>
+        </div>
+        <br>
+        <% } %>
+          <table id="questions" class="display" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Answer 1(Right Answer)</th>
+                <th>Answer 2</th>
+                <th>Answer 3</th>
+                <th>Answer 4</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%
+        for(var i = 0;i<questions.length;i++) {
+          %>
+                <tr>
+                  <td>
+                    <%= i+1 %>
+                  </td>
+                  <td>
+                    <%= questions[i].id %>
+                  </td>
+                  <td>
+                    <%= questions[i].question %>
+                  </td>
+                  <td>
+                    <%= questions[i].answer1 %>
+                  </td>
+                  <td>
+                    <%= questions[i].answer2 %>
+                  </td>
+                  <td>
+                    <%= questions[i].answer3 %>
+                  </td>
+                  <td>
+                    <%= questions[i].answer4 %>
+                  </td>
+                  <td>
+                    <a href="/questions/edit/<%= questions[i].id %>" title="Edit"><span class="fa fa-pencil" aria-hidden="true"></span></a> |
+                    <a onclick="return confirm('Are you sure?')" href="/questions/delete/<%= questions[i].id %>" title="Delete"><span class="fa fa-eraser" aria-hidden="true"></span></a>
+                  </td>
+                </tr>
+                <%
+        }
+      %>
+            </tbody>
+          </table>
+          <a href="/questions/add"><button type="button" class="btn btn-primary">Add Student</button></a>
+    </div>
+    <% include ./partials/footer %>
+      <script>
+        $(document).ready(function() {
+          $('#questions').DataTable();
+        });
+      </script>
+</body>
+
+</html>

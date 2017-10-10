@@ -6,6 +6,9 @@ const index = require('./routes/indexRoute');
 const auth = require('./routes/authRoute');
 const user = require('./routes/userRoute');
 
+const question = require('./routes/question.js')
+const exam = require('./routes/exam.js')
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -15,6 +18,9 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }))
+
+app.use('/questions', question)
+app.use('/exams', exam)
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
