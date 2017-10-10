@@ -2,14 +2,18 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>Do Exam</title>
+  <% include ./partials/head %>
 </head>
 
 <body>
-  <form method="post" action="/ayoujian/periksa">
-    <div id="content">
-      <%
+  <% include ./partials/header %>
+    <div class="container">
+      <form method="post" action="/ayoujian/periksa">
+        <div class="row">
+          <div class="col">
+          </div>
+          <div class="col">
+            <%
       soals.forEach((soal, index)=>{
         var jawaban = [];
         jawaban.push(soal.answer1)
@@ -17,44 +21,64 @@
         jawaban.push(soal.answer3)
         jawaban.push(soal.answer4)
     %>
-        <div class="asd page<%= index %>">
-          <p>
-            <%= soal.question %>
-          </p>
-          <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][0]] %>">
-          <%= jawaban[randomJawaban[index][0]] %>
-            <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][1]] %>">
-            <%= jawaban[randomJawaban[index][1]] %>
-              <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][2]] %>">
-              <%= jawaban[randomJawaban[index][2]] %>
-                <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][3]] %>">
-                <%= jawaban[randomJawaban[index][3]] %>
+              <div class="asd page<%= index %>">
+                <p>
+                  <%= soal.question %>
+                </p>
+                <div class="form-group">
+                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][0]] %>">
+                  <%= jawaban[randomJawaban[index][0]] %>
                 </div>
-                  <%
+                <div class="form-group">
+                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][1]] %>">
+                  <%= jawaban[randomJawaban[index][1]] %>
+                </div>
+                <div class="form-group">
+                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][2]] %>">
+                  <%= jawaban[randomJawaban[index][2]] %>
+                </div>
+                <div class="form-group">
+                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][3]] %>">
+                  <%= jawaban[randomJawaban[index][3]] %>
+                </div>
+              </div>
+              <%
       })
     %>
+          </div>
+          <div class="col">
+          </div>
+        </div><br>
+        <div class="row">
+          <div class="col">
+            <div class="prev"><button type="button" class="btn btn-secondary">Prev</button></div>
+          </div>
+          <div class="col">
+            <input type="submit" value="SUBMIT" class="btn btn-primary">
+          </div>
+          <div class="col">
+            <div class="next"><button type="button" class="btn btn-secondary">Next</button></div>
+          </div>
+      </form>
+      </div>
     </div>
-    <div class="next">Next</div>
-    <div class="prev">Prev</div>
-    <input type="submit" value="SUBMIT">
-    </form>
-          <script src = "https://code.jquery.com/jquery-1.12.4.min.js">
-        </script>
-        <script>
-          $(document).ready(function() {
-            var page = 0;
-            $(".asd").hide();
-            $(".page0").show();
-            $('.next').on('click',function(){
-              $('.page' + page).hide();
-              $('.page' + ++page).show();
-            })
-            $('.prev').on('click',function(){
-              $('.page' + page).hide();
-              $('.page' + --page).show();
-            })
-          }); // end $(document).ready method
-        </script>
+    <% include ./partials/footer %>
+      </script>
+      <script>
+        $(document).ready(function() {
+          var page = 0;
+          $(".asd").hide();
+          $(".page0").show();
+          $('.next').on('click', function() {
+            $('.page' + page).hide();
+            $('.page' + ++page).show();
+          })
+          $('.prev').on('click', function() {
+            $('.page' + page).hide();
+            $('.page' + --page).show();
+          })
+        }); // end $(document).ready method
+      </script>
 </body>
 
 </html>
