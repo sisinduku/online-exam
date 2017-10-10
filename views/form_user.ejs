@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="container">
+      <h2><%= title %></h2>
+      <% if(err) { %>
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <%= err.hasOwnProperty('message') ? err.message : err  %>
+          </div>
+        </div>
+        <br>
+      <% } %>
+      <form action="<%= action %>" method="post">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" value="<%= user ? user.username : ""%>" placeholder="Insert Username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Insert Password" required>
+        </div>
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input type="text" class="form-control" id="fullname" name="fullname" value="<%= user ? user.fullname : ""%>" placeholder="Insert Fullname" required>
+        </div>
+        <div class="form-group">
+          <label for="role">role</label>
+          <select class="form-control" name="role">
+            <option disabled selected>Select Role</option>
+            <% if (user) { %>
+              <option value="admin" <%= user.role === 'admin' ? 'selected' : "" %> >Admin</option>
+              <option value="user" <%= user.role === 'user' ? 'selected' : "" %> >User</option>
+            <%} else { %>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            <%}%>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <% include ./partials/footer %>
+  </body>
+</html>
