@@ -1,5 +1,5 @@
 module.exports = function(req, res, next) {
-  let privilegeAdmin = ['/users'];
+  let privilegeAdmin = ['/users', '/exams', '/questions'];
   let privilegeUser = ['/'];
 
   switch (req.session.role) {

@@ -11,6 +11,7 @@ class ExamCtrl {
         message: (req.query.hasOwnProperty('message')) ? req.query.message : "",
         exams: exams,
         page: 'exam-nav',
+        session: req.session,
       })
     }).catch((reason) => {
       console.log(reason);
@@ -21,6 +22,7 @@ class ExamCtrl {
       title: 'Add New Question',
       err: (param.hasOwnProperty('err')) ? param.err : null,
       page: 'exam-nav',
+      session: req.session,
     })
   }
   static postExam(req, res, param) {
@@ -40,6 +42,7 @@ class ExamCtrl {
         title: 'Edit Exam id ' + req.params.id,
         err: (param.hasOwnProperty('err')) ? param.err : null,
         page: 'exam-nav',
+        session: req.session,
       })
     }).catch((reason) => {
       console.log(reason);
@@ -88,6 +91,7 @@ class ExamCtrl {
         title: 'Assign Exam id ' + req.params.id,
         err: (param.hasOwnProperty('err')) ? param.err : null,
         page: 'exam-nav',
+        session: req.session,
       })
     })
   }

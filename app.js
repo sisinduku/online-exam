@@ -6,8 +6,8 @@ const index = require('./routes/indexRoute');
 const auth = require('./routes/authRoute');
 const user = require('./routes/userRoute');
 
-const question = require('./routes/question.js')
-const exam = require('./routes/exam.js')
+const question = require('./routes/questionRoute.js')
+const exam = require('./routes/examRoute.js')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({

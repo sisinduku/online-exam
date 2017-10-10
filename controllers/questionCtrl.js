@@ -11,6 +11,7 @@ class QuestionCtrl{
         message: (req.query.hasOwnProperty('message')) ? req.query.message : "",
         questions:questions,
         page: 'question-nav',
+        session: req.session,
       })
     }).catch((reason)=>{
       console.log(reason);
@@ -19,7 +20,7 @@ class QuestionCtrl{
   static getAdd(req, res, param) {
     res.render('form_question', {
       title:'Add New Question',
-      err: (param.hasOwnProperty('err')) ? param.err : null, page: 'question-nav',
+      err: (param.hasOwnProperty('err')) ? param.err : null, page: 'question-nav', session: req.session,
     })
   }
   static postQuestion(req, res, param) {
@@ -39,6 +40,7 @@ class QuestionCtrl{
         title:'Edit Question id '+req.params.id,
         err: (param.hasOwnProperty('err')) ? param.err : null,
         page: 'question-nav',
+        session: req.session,
       })
     }).catch((reason)=>{
       console.log(reason);
