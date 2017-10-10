@@ -116,6 +116,9 @@ class ExamCtrl {
     })
   }
   static removeQuestionExam(req, res, param) {
+    if(!Array.isArray(req.body.deletedId)){
+      req.body.deletedId = [req.body.deletedId];
+    }
     model.ExamQuestion.destroy({
       where: {
         questionId: {
@@ -132,7 +135,11 @@ class ExamCtrl {
     })
   }
   static addQuestionExam(req, res, param) {
-    let arr_object = req.body.addedId.map((obj) => {
+    let arr_object = [];
+    if(!Array.isArray(req.body.addedId)){
+      req.body.addedId = [req.body.addedId];
+    }
+    arr_object = req.body.addedId.map((obj) => {
       return {
         questionId: obj,
         examId: req.params.id
