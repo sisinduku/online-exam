@@ -21,7 +21,7 @@
           <select class="form-control" name="exam" required>
             <option disabled selected>Please Choose Exam</option>
             <% exams.forEach(exam => { %>
-              <option value="<%= exam.id+'hubahuba'+exam.jumlahSoal %>"><%= exam.examName %></option>
+              <option value="<%= exam.id+'&'+exam.jumlahsoal %>"><%= exam.name %></option>
             <% }) %>
           </select>
         </div>
