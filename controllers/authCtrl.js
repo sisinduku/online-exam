@@ -20,6 +20,7 @@ class AuthCtrl {
       .then(user => {
         if (user) {
           if (decryptAES256CTR(user.password) === req.body.password) {
+            req.session.userId = user.id;
             req.session.username = user.username;
             req.session.role = user.role;
             res.redirect('/');
