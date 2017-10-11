@@ -13,6 +13,7 @@
           <div class="col">
           </div>
           <div class="col">
+
             <%
       soals.forEach((soal, index)=>{
         var jawaban = [];
@@ -21,25 +22,38 @@
         jawaban.push(soal.answer3)
         jawaban.push(soal.answer4)
     %>
+
               <div class="asd page<%= index %>">
-                <p>
-                  <%= soal.question %>
-                </p>
-                <div class="form-group">
-                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][0]] %>">
-                  <%= jawaban[randomJawaban[index][0]] %>
-                </div>
-                <div class="form-group">
-                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][1]] %>">
-                  <%= jawaban[randomJawaban[index][1]] %>
-                </div>
-                <div class="form-group">
-                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][2]] %>">
-                  <%= jawaban[randomJawaban[index][2]] %>
-                </div>
-                <div class="form-group">
-                  <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][3]] %>">
-                  <%= jawaban[randomJawaban[index][3]] %>
+                <div class="card">
+                  <div class="card-title">
+                    <h3 class="card-header" align="center">
+                      <%= soal.question %>
+                    </h3>
+                  </div>
+                  <div class="card-block">
+                    <div class="form-group">
+                      <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][0]] %>">
+                      <%= jawaban[randomJawaban[index][0]] %>
+                    </div>
+                  </div>
+                  <div class="card-block">
+                    <div class="form-group">
+                      <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][1]] %>">
+                      <%= jawaban[randomJawaban[index][1]] %>
+                    </div>
+                  </div>
+                  <div class="card-block">
+                    <div class="form-group">
+                      <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][2]] %>">
+                      <%= jawaban[randomJawaban[index][2]] %>
+                    </div>
+                  </div>
+                  <div class="card-block">
+                    <div class="form-group">
+                      <input type="radio" name="jawaban<%= index %>" value="<%= jawaban[randomJawaban[index][3]] %>">
+                      <%= jawaban[randomJawaban[index][3]] %>
+                    </div>
+                  </div>
                 </div>
               </div>
               <%
@@ -50,17 +64,17 @@
           </div>
         </div><br>
         <div class="row">
-          <div class="col">
+          <div class="col text-center">
             <div class="prev"><button type="button" class="btn btn-secondary">Prev</button></div>
           </div>
-          <div class="col">
+          <div class="col text-center">
             <input type="submit" value="SUBMIT" class="btn btn-primary">
           </div>
-          <div class="col">
+          <div class="col text-center">
             <div class="next"><button type="button" class="btn btn-secondary">Next</button></div>
           </div>
+          </div>
       </form>
-      </div>
     </div>
     <% include ./partials/footer %>
       </script>

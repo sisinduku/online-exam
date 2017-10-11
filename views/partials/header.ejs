@@ -10,10 +10,13 @@
       </li>
       <% if(session.role === 'admin') { %>
         <li id="user-nav" class="nav-item">
-          <a class="nav-link" href="/users/">Users</a>
+          <a class="nav-link" href="/users">Users</a>
         </li>
         <li id="question-nav" class="nav-item">
-          <a class="nav-link" href="/questions/">Questions</a>
+          <a class="nav-link" href="/questions">Exams</a>
+        </li>
+        <li id="exams-nav" class="nav-item">
+          <a class="nav-link" href="/exams">Questions</a>
         </li>
       <%} else if(session.role === 'user') { %>
         <li id="exam-nav" class="nav-item">
