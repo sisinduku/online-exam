@@ -65,13 +65,13 @@
         </div><br>
         <div class="row">
           <div class="col text-center">
-            <div class="prev"><button type="button" class="btn btn-secondary">Prev</button></div>
+            <div id="prevId" class="prev"><button type="button" class="btn btn-secondary">Prev</button></div>
           </div>
           <div class="col text-center">
             <input type="submit" value="SUBMIT" class="btn btn-primary">
           </div>
           <div class="col text-center">
-            <div class="next"><button type="button" class="btn btn-secondary">Next</button></div>
+            <div id="nextId" class="next"><button type="button" class="btn btn-secondary">Next</button></div>
           </div>
           </div>
       </form>
@@ -81,15 +81,35 @@
       <script>
         $(document).ready(function() {
           var page = 0;
+          var total = $(".asd").children().length;
+          console.log(page);
+          if (total === 1) {
+            $("#prevId").hide();
+            $("#nextId").hide();
+          } else {
+            $("#prevId").hide();
+          }
           $(".asd").hide();
           $(".page0").show();
           $('.next').on('click', function() {
             $('.page' + page).hide();
             $('.page' + ++page).show();
+            if(page < total){
+              $("#prevId").show();
+            }
+            if(page === total - 1){
+              $("#nextId").hide();
+            }
           })
           $('.prev').on('click', function() {
             $('.page' + page).hide();
             $('.page' + --page).show();
+            if(page >= 0){
+              $("#nextId").show();
+            }
+            if(page === 0){
+              $("#prevId").hide();
+            }
           })
         }); // end $(document).ready method
       </script>

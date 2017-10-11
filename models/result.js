@@ -11,5 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
+  Result.associate = function(model) {
+    Result.belongsTo(model.User, {
+      foreignKey: 'userId',
+      sourceKey: 'id',
+    });
+    Result.belongsTo(model.Exam, {
+      foreignKey: 'examId',
+      sourceKey: 'id'
+    })
+  }
   return Result;
 };

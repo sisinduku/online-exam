@@ -102,7 +102,7 @@ class UserCtrl {
          left join "Exams" on "Exams".id = "ExamQuestions"."examId"
          group by "ExamQuestions"."examId"
         ) AS Take
-      where Take.jumlahSoal >= Take.total_exam`, {
+      where Take.jumlahSoal <= Take.total_exam`, {
           type: sequelize.QueryTypes.SELECT
         })
       .then(result => {
