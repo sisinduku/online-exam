@@ -9,6 +9,10 @@ router.post('/', function(req, res) {
   DoExamCtrl.getTest(req, res);
 })
 
+router.get('/', function(req, res) {
+  res.redirect('/users/take_exam');
+})
+
 router.post('/periksa', function(req, res) {
   DoExamCtrl.checkTest(req, res);
 })
