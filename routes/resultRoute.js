@@ -1,6 +1,7 @@
 const express = require('express');
 const model = require('../models');
 const router = express.Router();
+const ResultCtrl = require('../controllers/resultCtrl');
 const checkPrivilege = require('../helpers/checkPrivilege');
 const checkAuth = require('../helpers/checkAuth');
 
@@ -12,18 +13,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', function(req, res) {
-
-  model.Result.findAll({
-      where: {
-        userId: req.session.userId
-      },
-      include: ['Exam']
-    })
-    .then(results => {
-      res.render('show_list_result', {
-        results: results
-      });
-    })
+  ResultCtrl.showResult(req, res);
 })
 
 module.exports = router;
