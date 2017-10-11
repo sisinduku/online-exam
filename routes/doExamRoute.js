@@ -13,8 +13,8 @@ router.post('/periksa', function(req, res) {
   DoExamCtrl.checkTest(req, res);
 })
 
-router.get('/complete/:name/:score/:date', (req, res) => {
-  res.send(req.params.name + req.params.score + req.params.date);
+router.get('/complete/:id/:name/:examName/:score/:date', (req, res) => {
+  res.send(req.params);
 });
 
 module.exports = router;

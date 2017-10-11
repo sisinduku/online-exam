@@ -87,11 +87,20 @@ class DoExamCtrl {
           delete req.session.jumlahSoal;
           delete req.session.dataSoal;
           delete req.session.randomJawaban;
-          // res.send(created);
-          let date = new Date(created.createdAt);
-          let safeDate = encodeURIComponent(date.getUTCDate() + '/' + date.getUTCMonth() + '/' + date.getUTCFullYear());
-          let safeFullName = encodeURIComponent(user.fullname);
-          res.redirect(`/ayoujian/complete/${safeFullName}/${score}/${safeDate}`);
+          model.Exam.findOne({
+              where: {
+                id: created.examId
+              }
+            })
+            .then(exam => {
+              let date = new Date(created.createdAt);
+              let safeDate = encodeURIComponent(date.getUTCDate() + '/' + date.getUTCMonth() + '/' + date.getUTCFullYear());
+              let safeFullName = encodeURIComponent(user.fullname);
+              res.redirect(`/ayoujian/complete/${created.id}/${safeFullName}/${exam.examName}/${score}/${safeDate}`);
+            })
+            .catch(reason => {
+              console.log(reason);
+            })
         });
     })
   }
