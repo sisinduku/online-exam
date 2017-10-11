@@ -3,12 +3,27 @@
 
 <head>
   <% include ./partials/head %>
+  <style>
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  </style>
 </head>
 
 <body>
   <% include ./partials/header %>
     <div class="container">
-      <form method="post" action="/ayoujian/periksa">
+      <form id="formsoal">
         <div class="row">
           <div class="col">
           </div>
@@ -68,18 +83,26 @@
             <div id="prevId" class="prev"><button type="button" class="btn btn-secondary">Prev</button></div>
           </div>
           <div class="col text-center">
-            <input type="submit" value="SUBMIT" class="btn btn-primary">
+            <button type="button" id="buttonSubmit" name="button">Submit</button>
           </div>
           <div class="col text-center">
             <div id="nextId" class="next"><button type="button" class="btn btn-secondary">Next</button></div>
           </div>
-          </div>
+        </div>
       </form>
     </div>
+    <div id="loader" class="loader" style="display: none"></div>
     <% include ./partials/footer %>
-      </script>
       <script>
         $(document).ready(function() {
+          $("#buttonSubmit").click(function(){
+            console.log('sini', $("#formsoal").serialize());
+            $("#loader").fadeIn(); //show when submitting
+            $.post('/ayoujian/periksa', $("#formsoal").serialize(), function(data){
+              $("#loader").fadeOut();
+              window.location.href = 'results';
+            });
+          });
           var page = 0;
           var total = $(".asd").children().length;
           console.log(page);

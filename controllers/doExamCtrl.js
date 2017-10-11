@@ -98,7 +98,14 @@ class DoExamCtrl {
               let date = new Date(created.createdAt);
               let safeDate = encodeURIComponent(date.getUTCDate() + '/' + date.getUTCMonth() + '/' + date.getUTCFullYear());
               let safeFullName = encodeURIComponent(user.fullname);
-              res.redirect(`/ayoujian/complete/${created.id}/${safeFullName}/${exam.examName}/${score}/${safeDate}`);
+              this.genPdf(req, res, {
+                name: user.fullname,
+                score: score,
+                date: date.getUTCDate() + '/' + date.getUTCMonth() + '/' + date.getUTCFullYear(),
+                examName: exam.examName,
+                id: created.id
+              })
+              // res.redirect(`/ayoujian/complete/${created.id}/${safeFullName}/${exam.examName}/${score}/${safeDate}`);
             })
             .catch(reason => {
               console.log(reason);
@@ -108,26 +115,27 @@ class DoExamCtrl {
   }
   static genPdf(req, res, param) {
     var template = path.join(__dirname, '../views/certificate.ejs');
-    var pdfPath = 'pdf/'+req.params.id+'.pdf';
+    var pdfPath = 'pdf/' + param.id + '.pdf';
     var option = {
-        paperSize: {
-          format: 'A4',
-          orientation: 'portrait',
-          border: '1.8cm'
-        }
+      paperSize: {
+        format: 'A4',
+        orientation: 'portrait',
+        border: '1.8cm'
+      }
     };
     var datab = {
-      fullname:req.params.name,
-      score:req.params.score,
-      awardDate:req.params.date,
-      examName:req.params.examName,
-      resultId:req.params.id,
-      path:template,
-      pdfPath:pdfPath,
-      option:option,
+      fullname: param.name,
+      score: param.score,
+      awardDate: param.date,
+      examName: param.examName,
+      resultId: param.id,
+      path: template,
+      pdfPath: pdfPath,
+      option: option,
     }
-    pdfMaker(template, datab, pdfPath, option, function(){
-      res.download('pdf/'+req.params.id+'.pdf');
+
+    pdfMaker(template, datab, pdfPath, option, function() {
+      res.send('pdf/' + param.id + '.pdf');
     });
   }
 }

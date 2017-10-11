@@ -3,6 +3,7 @@ const model = require('../models');
 class ResultCtrl {
   static showResult(req, res) {
     model.Result.findAll({
+        attributes: ['id'],
         where: {
           userId: req.session.userId
         },
@@ -15,6 +16,7 @@ class ResultCtrl {
           page: 'results-nav',
           session: req.session,
         });
+        // res.send(results);
       })
   }
 }
