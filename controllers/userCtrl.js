@@ -88,36 +88,24 @@ class UserCtrl {
   }
 
   static takeExamForm(req, res, param) {
-    // select max("Exams"."examName") as name, max("Exams"."jumlahSoal") as jumlahsoal, "examId" , count(*) as total_exam from "ExamQuestions" left join "Exams" on "Exams".id = "ExamQuestions"."examId" group by "ExamQuestions"."examId"
-    // model.Exam.findAll({
-    //     attributes: {
-    //       exclude: [
-    //         'Exams.createdAt',
-    //         'Exams.updatedAt', [model.sequelize.fn('MAX', model.sequelize.col('Exams.jumlahSoal'))]
-    //       ],
-    //       include: [
-    //         [model.sequelize.fn('COUNT', model.sequelize.col('ExamQuestions.examId')), 'total']
-    //       ]
-    //     },
-    //     include: [{
-    //       model: model.ExamQuestion,
-    //       attributes: ['examId']
-    //     }],
-    //     group: ['ExamQuestions.examId', 'Exam.id', 'ExamQuestions.id']
-    //   })
-    //   .then(exams => {
-    //     res.send(exams);
-    //   })
-    //   .catch(reason => {
-    //     console.log(reason);
-    //   })
-    model.Exam.findAll({
-        include: 'ExamQuestions'
-      })
-      .then(exams => {
-        let result = exams.filter((exam, index) => {
-          return exam.dataValues.ExamQuestions.length >= exam.dataValues.jumlahSoal;
+    model.sequelize
+      .query(
+        `select Take.id, Take.name, Take.jumlahsoal
+      from
+        (select
+          max("Exams"."id") as id,
+          max("Exams"."examName") as name,
+          max("Exams"."jumlahSoal") as jumlahsoal,
+          "examId",
+          count(*) as total_exam
+         from "ExamQuestions"
+         left join "Exams" on "Exams".id = "ExamQuestions"."examId"
+         group by "ExamQuestions"."examId"
+        ) AS Take
+      where Take.jumlahSoal >= Take.total_exam`, {
+          type: sequelize.QueryTypes.SELECT
         })
+      .then(result => {
         res.render('form_choose_exam', {
           exams: result,
           title: 'Choose Exam',
@@ -125,6 +113,9 @@ class UserCtrl {
           err: param.hasOwnProperty('err') ? param.err : null,
           session: req.session,
         });
+      })
+      .catch(err => {
+        console.log(err);
       })
   }
 }
