@@ -46,65 +46,94 @@ function pdfMaker(template, data, pdfPath, option, cb) {
       }
     };
 
+    <<
+    << << < HEAD
     fs.readFile(template, 'utf8', function(err, file) {
-      if (err) {
-        throw err;
-      }
-
-      var html = ejs.render(file, data);
-      createSession(html, pdfPath, option, cb);
-
-    });
-
-  } else {
-    console.log('Unknown file extension')
-  }
-}
-
-function createSession(html, pdfPath, option, cb) {
-  if (_session) {
-    createPage(_session, html, pdfPath, option);
-  } else {
-    phantom.create({
-      path: phantomjs.path
-    }, function(err, session) {
-      if (err) {
-        throw err;
-      }
-
-      _session = session;
-      createPage(session, html, pdfPath, option, cb)
-    });
-  }
-}
-
-function createPage(session, html, pdfPath, option, cb) {
-  session.createPage(function(err, page) {
-    if (err) {
-      throw err;
-    }
-
-    _.forEach(option, function(val, key) {
-      page.set(key, val);
-    });
-
-    page.set('content', html, function(err) {
-      if (err) {
-        throw err;
-      }
-    });
-
-    page.onLoadFinished = function(status) {
-      page.render(pdfPath, function(error) {
-        page.close();
-        page = null;
-        if (error) {
+        if (err) {
           throw err;
         }
-        cb();
+
+        var html = ejs.render(file, data);
+        createSession(html, pdfPath, option, cb); ===
+        === =
+        fs.readFile(template, 'utf8', function(err, file) {
+          if (err) {
+            throw err;
+          }
+          var html = ejs.render(file, data);
+          createSession(html, pdfPath, option, cb); >>>
+          >>> > origin / exam_questions_crud
+
+        });
+
+      } else {
+        console.log('Unknown file extension')
+      }
+    }
+
+    function createSession(html, pdfPath, option, cb) {
+      if (_session) {
+        createPage(_session, html, pdfPath, option, cb);
+      } else {
+        phantom.create({
+          path: phantomjs.path
+        }, function(err, session) {
+          if (err) {
+            throw err;
+          }
+
+          _session = session;
+          createPage(session, html, pdfPath, option, cb)
+        });
+      }
+    }
+
+    function createPage(session, html, pdfPath, option, cb) {
+      session.createPage(function(err, page) {
+        if (err) {
+          throw err;
+        }
+
+        _.forEach(option, function(val, key) {
+          page.set(key, val);
+        });
+
+        page.set('content', html, function(err) {
+          if (err) {
+            throw err;
+          }
+        });
+
+        page.onLoadFinished = function(status) {
+          page.render(pdfPath, function(error) {
+            page.close();
+            page = null;
+
+            if (error) {
+              throw err;
+            }
+            cb();
+          });
+        };
       });
-    };
-  });
+
+      page.set('content', html, function(err) {
+        if (err) {
+          throw err;
+        }
+      });
+
+      page.onLoadFinished = function(status) {
+        page.render(pdfPath, function(error) {
+          page.close();
+          page = null;
+          if (error) {
+            throw err;
+          }
+          cb();
+        });
+      };
+    });
 }
 
 module.exports = pdfMaker;
