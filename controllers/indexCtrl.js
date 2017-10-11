@@ -7,6 +7,7 @@ class IndexCtrl {
       page: 'home-nav',
       err: param.hasOwnProperty('err') ? param.err : null,
       session: req.session,
+      message: req.query.hasOwnProperty('message') ? req.query.message : "",
     });
   }
 }

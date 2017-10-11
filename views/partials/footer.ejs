@@ -9,6 +9,69 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/js/ie10-viewport-bug-workaround.js"></script>
 <script src="https://use.fontawesome.com/53a4defc45.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.common.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.common.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.common.min.js.map"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.1/sweetalert2.min.js"></script>
+
 <script>
   $("#<%= page %>").addClass("active");
 </script>
+<%
+  if(hasOwnProperty('message')){
+  if(message == 'success'){
+%>
+  <script>
+    swal({
+      title: 'Success!',
+      text: 'Success Update Data',
+      type: 'success',
+      confirmButtonText: 'OK'
+    })
+  </script>
+  <%
+  }
+  else if(message.toLowerCase().indexOf('error')> -1){
+    %>
+    <script>
+      swal({
+        title: 'Error!',
+        text: 'Oopss, Something wrong :(',
+        type: 'error',
+        confirmButtonText: 'OK'
+      })
+    </script>
+    <%
+  }
+  else if(message == 'logoutsuccess') {
+    %>
+    <script>
+      swal({
+        title: 'Success!',
+        text: 'Success Logout',
+        type: 'success',
+        confirmButtonText: 'OK'
+      })
+    </script>
+    <%
+  }
+  else if(message =='loginsuccess'){
+    %>
+    <script>
+      swal({
+        title: 'Success!',
+        text: 'Success Login Bung',
+        type: 'success',
+        confirmButtonText: 'OK'
+      })
+    </script>
+  <%
+  }
+}
+else{
+
+}
+%>

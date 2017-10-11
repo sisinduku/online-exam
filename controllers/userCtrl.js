@@ -10,6 +10,7 @@ class UserCtrl {
           title: 'Show All Users',
           page: 'user-nav',
           session: req.session,
+          message: (req.query.hasOwnProperty('message')) ? req.query.message : "",
         });
       })
   }
@@ -27,7 +28,7 @@ class UserCtrl {
   static addUser(req, res) {
     model.User.create(req.body)
       .then(inserted => {
-        res.redirect('/users');
+        res.redirect('/users?message=success');
       })
       .catch(reason => {
         this.addUserForm(req, res, {
@@ -64,7 +65,7 @@ class UserCtrl {
         }
       })
       .then(updated => {
-        res.redirect('/users');
+        res.redirect('/users?message=success');
       })
       .catch(reason => {
         this.editUserForm(req, res, {

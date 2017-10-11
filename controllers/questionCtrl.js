@@ -65,7 +65,7 @@ class QuestionCtrl{
         id:req.params.id
       }
     }).then((deleted)=>{
-      this.getIndex(req, res, {});
+      res.redirect('/questions?message=success');
     }).catch((reason)=>{
       this.getIndex(req, res, {
         err:reason.errors[0]
