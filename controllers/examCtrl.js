@@ -12,7 +12,7 @@ class ExamCtrl {
         err: (param.hasOwnProperty('err')) ? param.err : null,
         message: (req.query.hasOwnProperty('message')) ? req.query.message : "",
         exams: exams,
-        page: 'exam-nav',
+        page: 'exams-nav',
         session: req.session,
       })
     }).catch((reason) => {
@@ -23,7 +23,7 @@ class ExamCtrl {
     res.render('form_exam', {
       title: 'Add New Question',
       err: (param.hasOwnProperty('err')) ? param.err : null,
-      page: 'exam-nav',
+      page: 'exams-nav',
       session: req.session,
     })
   }
@@ -43,7 +43,7 @@ class ExamCtrl {
         exams: exam,
         title: 'Edit Exam id ' + req.params.id,
         err: (param.hasOwnProperty('err')) ? param.err : null,
-        page: 'exam-nav',
+        page: 'exams-nav',
         session: req.session,
       })
     }).catch((reason) => {
@@ -107,7 +107,7 @@ class ExamCtrl {
           questions: results[1],
           title: 'Assign Exam id ' + req.params.id,
           err: (param.hasOwnProperty('err')) ? param.err : null,
-          page: 'exam-nav',
+          page: 'exams-nav',
           session: req.session,
         })
       })
