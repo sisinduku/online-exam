@@ -7,104 +7,104 @@ var _session;
 
 function pdfMaker(template, data, pdfPath, option, cb) {
 
-    var fileExtension = template.split('/').pop().split('.').pop();
+  var fileExtension = template.split('/').pop().split('.').pop();
 
-    if (fileExtension === 'html') {
-        option = pdfPath || {
-                paperSize: {
-                    format: 'A4',
-                    orientation: 'portrait',
-                    border: '1.8cm'
-                }
-            };
+  if (fileExtension === 'html') {
+    option = pdfPath || {
+      paperSize: {
+        format: 'A4',
+        orientation: 'portrait',
+        border: '1.8cm'
+      }
+    };
 
-        pdfPath = data;
+    pdfPath = data;
 
-        fs.readFile(template, 'utf8', function (err, html) {
-            if (err) {
-                throw err;
-            }
+    fs.readFile(template, 'utf8', function(err, html) {
+      if (err) {
+        throw err;
+      }
 
-            createSession(html, pdfPath, option);
+      createSession(html, pdfPath, option);
 
-        });
+    });
 
-    } else if (fileExtension === 'ejs') {
-        if (!data) {
-            console.log('Please provide data object');
-        }
-
-        if (!pdfPath) {
-            console.log('Please provide file path of the pdf');
-        }
-
-        option = option || {
-                paperSize: {
-                    format: 'A4',
-                    orientation: 'portrait',
-                    border: '1.8cm'
-                }
-            };
-
-        fs.readFile(template, 'utf8', function (err, file) {
-            if (err) {
-                throw err;
-            }
-            var html = ejs.render(file, data);
-            createSession(html, pdfPath, option, cb);
-
-        });
-
-    } else {
-        console.log('Unknown file extension')
+  } else if (fileExtension === 'ejs') {
+    if (!data) {
+      console.log('Please provide data object');
     }
+
+    if (!pdfPath) {
+      console.log('Please provide file path of the pdf');
+    }
+
+    option = option || {
+      paperSize: {
+        format: 'A4',
+        orientation: 'portrait',
+        border: '1.8cm'
+      }
+    };
+
+    fs.readFile(template, 'utf8', function(err, file) {
+      if (err) {
+        throw err;
+      }
+      var html = ejs.render(file, data);
+      createSession(html, pdfPath, option, cb);
+
+    });
+
+  } else {
+    console.log('Unknown file extension')
+  }
 }
 
 function createSession(html, pdfPath, option, cb) {
-    if (_session) {
-        createPage(_session, html, pdfPath, option, cb);
-    } else {
-        phantom.create({
-            path: phantomjs.path
-        }, function (err, session) {
-            if (err) {
-                throw err;
-            }
+  if (_session) {
+    createPage(_session, html, pdfPath, option, cb);
+  } else {
+    phantom.create({
+      path: phantomjs.path
+    }, function(err, session) {
+      if (err) {
+        throw err;
+      }
 
-            _session = session;
-            createPage(session, html, pdfPath, option, cb)
-        });
-    }
+      _session = session;
+      createPage(session, html, pdfPath, option, cb)
+    });
+  }
 }
 
-function createPage (session, html, pdfPath, option, cb) {
-    session.createPage(function (err, page) {
-        if (err) {
-            throw err;
-        }
+function createPage(session, html, pdfPath, option, cb) {
+  session.createPage(function(err, page) {
+    if (err) {
+      throw err;
+    }
 
-        _.forEach(option, function (val, key) {
-            page.set(key, val);
-        });
-
-        page.set('content', html, function (err) {
-            if (err) {
-                throw err;
-            }
-        });
-
-        page.onLoadFinished = function (status) {
-            page.render(pdfPath, function (error) {
-                page.close();
-                page = null;
-
-                if (error) {
-                    throw err;
-                }
-                cb();
-            });
-        };
+    _.forEach(option, function(val, key) {
+      page.set(key, val);
     });
+
+    page.set('content', html, function(err) {
+      if (err) {
+        throw err;
+      }
+    });
+
+    page.onLoadFinished = function(status) {
+      page.render(pdfPath, function(error) {
+        page.close();
+        page = null;
+
+        if (error) {
+          throw err;
+        }
+        cb();
+      });
+    };
+  });
 }
 
 module.exports = pdfMaker;

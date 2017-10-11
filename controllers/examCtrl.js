@@ -69,7 +69,7 @@ class ExamCtrl {
         id: req.params.id
       }
     }).then((deleted) => {
-      this.getIndex(req, res, {});
+      res.redirect('/exams?message=success');
     }).catch((reason) => {
       this.getIndex(req, res, {
         err: reason.errors[0]

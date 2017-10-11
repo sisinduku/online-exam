@@ -16,4 +16,8 @@ router.get('/', function(req, res) {
   ResultCtrl.showResult(req, res);
 })
 
+router.get('/get_certificate', (req, res) => {
+  res.download('pdf/' + req.query.id + '.pdf');
+});
+
 module.exports = router;

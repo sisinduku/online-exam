@@ -7,6 +7,7 @@ class AuthCtrl {
       title: 'Login Page',
       page: 'login-nav',
       err: param.hasOwnProperty('err') ? param.err : null,
+      message: req.query.hasOwnProperty('message') ? req.query.message : "",
       session: req.session,
     });
   }
@@ -23,7 +24,7 @@ class AuthCtrl {
             req.session.userId = user.id;
             req.session.username = user.username;
             req.session.role = user.role;
-            res.redirect('/');
+            res.redirect('/?message=loginsuccess');
           } else {
             this.getLoginPage(req, res, {
               err: 'Username and password combination not found',
@@ -43,7 +44,7 @@ class AuthCtrl {
   static logout(req, res) {
     req.session.destroy((err) => {
       if (!err)
-        res.redirect('/auth/login');
+        res.redirect('/auth/login?message=logoutsuccess');
       else
         console.log(err);
     });

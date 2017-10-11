@@ -3,12 +3,38 @@
 
 <head>
   <% include ./partials/head %>
+  <style>
+  #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0.6;
+    z-index: 100;
+  }
+  #loading {
+    position: fixed;
+    z-index: 999;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: url('http://25.media.tumblr.com/tumblr_ma390hY1JA1rg91gjo1_500.gif') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+  </style>
 </head>
 
 <body>
   <% include ./partials/header %>
     <div class="container">
-      <form method="post" action="/ayoujian/periksa">
+      <form id="formsoal">
         <div class="row">
           <div class="col">
           </div>
@@ -68,18 +94,27 @@
             <div id="prevId" class="prev"><button type="button" class="btn btn-secondary">Prev</button></div>
           </div>
           <div class="col text-center">
-            <input type="submit" value="SUBMIT" class="btn btn-primary">
+            <button type="button" id="buttonSubmit" name="button">Submit</button>
           </div>
           <div class="col text-center">
             <div id="nextId" class="next"><button type="button" class="btn btn-secondary">Next</button></div>
           </div>
-          </div>
+        </div>
       </form>
     </div>
+    <div id="loading" style="display: none"></div>
     <% include ./partials/footer %>
-      </script>
       <script>
         $(document).ready(function() {
+          $("#buttonSubmit").click(function(){
+            console.log('sini', $("#formsoal").serialize());
+            $('body').append('<div id="overlay"></div>');
+            $("#loading").show();
+            $.post('/ayoujian/periksa', $("#formsoal").serialize(), function(data){
+              $("#loader").fadeOut();
+              window.location.href = 'results';
+            });
+          });
           var page = 0;
           var total = $(".asd").children().length;
           console.log(page);
