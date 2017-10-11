@@ -1,6 +1,8 @@
 const model = require('../models');
 const ExamCtrl = require('./examCtrl');
 const sequelize = require('sequelize');
+const path = require('path');
+var pdfMaker = require('../helpers/genPdf.js');
 
 class DoExamCtrl {
   static getTest(req, res) {
@@ -103,6 +105,30 @@ class DoExamCtrl {
             })
         });
     })
+  }
+  static genPdf(req, res, param) {
+    var template = path.join(__dirname, '../views/certificate.ejs');
+    var pdfPath = 'pdf/'+req.params.id+'.pdf';
+    var option = {
+        paperSize: {
+          format: 'A4',
+          orientation: 'portrait',
+          border: '1.8cm'
+        }
+    };
+    var datab = {
+      fullname:req.params.name,
+      score:req.params.score,
+      awardDate:req.params.date,
+      examName:req.params.examName,
+      resultId:req.params.id,
+      path:template,
+      pdfPath:pdfPath,
+      option:option,
+    }
+    pdfMaker(template, datab, pdfPath, option, function(){
+      res.download('pdf/'+req.params.id+'.pdf');
+    });
   }
 }
 

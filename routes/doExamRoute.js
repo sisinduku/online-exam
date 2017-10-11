@@ -14,7 +14,13 @@ router.post('/periksa', function(req, res) {
 })
 
 router.get('/complete/:id/:name/:examName/:score/:date', (req, res) => {
-  res.send(req.params);
+  DoExamCtrl.genPdf(req, res, {});
+  // genPdf(datab).then(()=>{
+  //   res.download('pdf/'+req.params.id+'.pdf');
+  // }).catch((err)=>{
+  //   console.log(err);
+  // })
+
 });
 
 module.exports = router;
