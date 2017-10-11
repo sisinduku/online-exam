@@ -50,7 +50,6 @@ function pdfMaker(template, data, pdfPath, option, cb) {
             if (err) {
                 throw err;
             }
-
             var html = ejs.render(file, data);
             createSession(html, pdfPath, option, cb);
 
@@ -63,7 +62,7 @@ function pdfMaker(template, data, pdfPath, option, cb) {
 
 function createSession(html, pdfPath, option, cb) {
     if (_session) {
-        createPage(_session, html, pdfPath, option);
+        createPage(_session, html, pdfPath, option, cb);
     } else {
         phantom.create({
             path: phantomjs.path
@@ -98,6 +97,7 @@ function createPage (session, html, pdfPath, option, cb) {
             page.render(pdfPath, function (error) {
                 page.close();
                 page = null;
+
                 if (error) {
                     throw err;
                 }
