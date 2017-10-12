@@ -3,7 +3,7 @@ const model = require('../models');
 class ResultCtrl {
   static showResult(req, res) {
     model.Result.findAll({
-        attributes: ['id'],
+        attributes: ['id', 'score', 'createdAt'],
         where: {
           userId: req.session.userId
         },

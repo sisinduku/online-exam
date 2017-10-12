@@ -12,6 +12,7 @@
             <th>No.</th>
             <th>Exam Name</th>
             <th>Score</th>
+            <th>Date</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -22,6 +23,13 @@
                 <td><%= index+1 %></td>
                 <td><%= result.Exam.examName %></td>
                 <td><%= result.score %></td>
+                <td>
+                  <%
+                    let date = new Date(result.createdAt)
+                    let dateReal = date.getDate() + "-" + date.getUTCMonth() + "-" + date.getUTCFullYear();
+                  %>
+                  <%= dateReal %>
+                </td>
                 <td>
                   <a href="results/get_certificate?id=<%= result.id %>">Download</a>
                 </td>
