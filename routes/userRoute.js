@@ -27,7 +27,7 @@ router.get('/edit/:userId', (req, res) => {
   UserCtrl.editUserForm(req, res, {});
 });
 
-router.post('/add/:userId', (req, res) => {
+router.post('/edit/:userId', (req, res) => {
   UserCtrl.editUser(req, res, {});
 });
 
