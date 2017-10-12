@@ -22,4 +22,12 @@ router.get('/unauthorized', (req, res) => {
   });
 });
 
+router.get('/signup', (req, res)=>{
+  AuthCtrl.getSignUp(req, res, {});
+})
+
+router.post('/signup', (req, res)=>{
+  AuthCtrl.signUp(req, res);
+})
+
 module.exports = router;

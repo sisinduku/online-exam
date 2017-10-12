@@ -49,6 +49,29 @@ class AuthCtrl {
         console.log(err);
     });
   }
+  static signUp(req, res) {
+    if(req.body.password != req.body.re_password){
+      res.redirect('/auth/signup?message=signupgagalpass');
+    }
+    req.body.role = 'user';
+    model.User.create(req.body)
+      .then(inserted => {
+        res.redirect('/auth/login?message=signupsuccess');
+      })
+      .catch(reason => {
+        console.log(reason);
+        res.redirect('/auth/signup?message=signupgagal');
+      });
+  }
+  static getSignUp(req, res, param){
+    res.render('signup_page', {
+      title: 'Sign Up Page',
+      page: 'login-nav',
+      err: param.hasOwnProperty('err') ? param.err : null,
+      message: req.query.hasOwnProperty('message') ? req.query.message : "",
+      session: req.session,
+    });
+  }
 }
 
 module.exports = AuthCtrl;
