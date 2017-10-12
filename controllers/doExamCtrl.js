@@ -28,7 +28,7 @@ class DoExamCtrl {
         });
         req.session.dataSoal = listQuestion;
         var randomedJawaban = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < idDanJumlah[1]; i++) {
           let temp = []
           for (let j = 0; j < 4; j++) {
             while (true) {
