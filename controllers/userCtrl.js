@@ -21,7 +21,7 @@ class UserCtrl {
       page: 'user-nav',
       session: req.session,
       action: '/users/add',
-      user:null,
+      user: null,
       err: param.hasOwnProperty('err') ? param.err : null,
     });
   }
@@ -60,7 +60,18 @@ class UserCtrl {
   }
 
   static editUser(req, res) {
-    model.User.update(req.body, {
+    let obj;
+    if (req.body.password == "") {
+      obj = {
+        id: req.body.id,
+        username: req.body.username,
+        fullname: req.body.fullname,
+        role: req.body.role
+      }
+    } else {
+      obj = req.body;
+    }
+    model.User.update(obj, {
         where: {
           id: req.params.userId,
         }
