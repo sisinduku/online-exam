@@ -5,7 +5,7 @@
   </head>
   <body>
     <% include ./partials/header %>
-    <div class="container">      
+    <div class="container">
       <table id='user' class="display" width="100%" cellspacing="0">
         <thead>
           <tr>
@@ -25,8 +25,8 @@
                 <td><%= user.fullname %></td>
                 <td><%= user.role %></td>
                 <td>
-                  <a href="/users/edit/<%= user.id %>">Edit</a> |
-                  <a onclick="return confirm('Are you sure?')" href="/users/delete/<%= user.id %>">Delete</a>
+                  <a title="Edit" href="/users/edit/<%= user.id %>"><button class="btn btn-primary" type="button"><span class="fa fa-pencil" aria-hidden="true"></span></button></a>
+                  <a title="Delete" onclick="return confirm('Are you sure?')" href="/users/delete/<%= user.id %>"><button class="btn btn-danger" type="button"><span class="fa fa-eraser" aria-hidden="true"></span></button></a>
                 </td>
               </tr>
             <% }) %>
@@ -42,7 +42,10 @@
     <% include ./partials/footer %>
     <script>
       $(document).ready(function(){
-          $('#user').DataTable();
+          $('#user').DataTable({
+            responsive: true,
+            scrollX: true,
+          });
       });
     </script>
   </body>

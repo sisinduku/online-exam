@@ -46,7 +46,10 @@
     <% include ./partials/footer %>
     <script>
       $(document).ready(function(){
-          $('#result').DataTable();
+          $('#result').DataTable({
+            responsive: true,
+            scrollX: true,
+          });
       });
     </script>
   </body>

@@ -44,9 +44,9 @@
                     <%= exams[i].jumlahSoal %>
                   </td>
                   <td>
-                    <a href="/exams/edit/<%= exams[i].id %>" title="Edit"><span class="fa fa-pencil" aria-hidden="true"></span></a>|
-                    <a onclick="return confirm('Are you sure?')" href="/exams/delete/<%= exams[i].id %>" title="Delete"><span class="fa fa-eraser" aria-hidden="true"></span></a>|
-                    <a href="/exams/assign/<%= exams[i].id %>" title="Assign Question"><button type="button" class="btn btn-primary">Assign Question</button></a>
+                    <a href="/exams/edit/<%= exams[i].id %>" title="Edit"><button type="button" class="btn btn-primary"><span class="fa fa-pencil" aria-hidden="true"></span></button></a>
+                    <a onclick="return confirm('Are you sure?')" href="/exams/delete/<%= exams[i].id %>" title="Delete"><button type="button" class="btn btn-danger"><span class="fa fa-eraser" aria-hidden="true"></span></button></a>
+                    <a href="/exams/assign/<%= exams[i].id %>" title="Assign Question"><button type="button" class="btn btn-primary"><span class="fa fa-question-circle-o"></span></button></a>
                   </td>
                 </tr>
                 <%
@@ -59,7 +59,10 @@
     <% include ./partials/footer %>
       <script>
         $(document).ready(function() {
-          $('#exams').DataTable();
+          $('#exams').DataTable({
+            responsive: true,
+            scrollX: true,
+          });
         });
       </script>
 </body>
