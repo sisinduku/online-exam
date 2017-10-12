@@ -1,6 +1,6 @@
 module.exports = function(req, res, next) {
   let privilegeAdmin = ['/users', '/exams', '/questions'];
-  let privilegeUser = ['/users', '/results'];
+  let privilegeUser = ['/users', '/results', '/ayoujian'];
   switch (req.session.role) {
     case 'admin':
       if (privilegeAdmin.indexOf(req.baseUrl) != -1)

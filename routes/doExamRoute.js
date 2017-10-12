@@ -4,6 +4,15 @@ const sequelize = require('sequelize');
 const router = express.Router();
 const ExamCtrl = require('../controllers/examCtrl');
 const DoExamCtrl = require('../controllers/doExamCtrl');
+const checkPrivilege = require('../helpers/checkPrivilege');
+const checkAuth = require('../helpers/checkAuth');
+
+router.use((req, res, next) => {
+  checkAuth(req, res, next);
+});
+router.use((req, res, next) => {
+  checkPrivilege(req, res, next);
+});
 
 router.post('/', function(req, res) {
   DoExamCtrl.getTest(req, res);
