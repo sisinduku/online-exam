@@ -56,6 +56,42 @@
     </script>
     <%
   }
+  else if(message == 'signupsuccess') {
+    %>
+    <script>
+      swal({
+        title: 'Success Sign Up',
+        text: 'Go login now!',
+        type: 'success',
+        confirmButtonText: 'OK'
+      })
+    </script>
+    <%
+  }
+  else if(message == 'signupgagalpass') {
+    %>
+    <script>
+      swal({
+        title: 'Oops!',
+        text: 'Your password not same :(',
+        type: 'error',
+        confirmButtonText: 'OK'
+      })
+    </script>
+    <%
+  }
+  else if(message == 'signupgagal') {
+    %>
+    <script>
+      swal({
+        title: 'Oops!',
+        text: 'Something went wrong :(',
+        type: 'error',
+        confirmButtonText: 'OK'
+      })
+    </script>
+    <%
+  }
   else if(message =='loginsuccess'){
     %>
     <script>

@@ -21,6 +21,7 @@ class UserCtrl {
       page: 'user-nav',
       session: req.session,
       action: '/users/add',
+      user:null,
       err: param.hasOwnProperty('err') ? param.err : null,
     });
   }

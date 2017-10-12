@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <% include ./partials/header %>
+    <div class="container">
+      <h2><%= title %></h2>
+      <% if(err) { %>
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <%= err.hasOwnProperty('message') ? err.message : err  %>
+          </div>
+        </div>
+        <br>
+      <% } %>
+      <form action="/auth/signup" method="post">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" placeholder="Insert Username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Insert Password" required>
+        </div>
+        <div class="form-group">
+          <label for="re_password">Re-Password</label>
+          <input type="password" class="form-control" id="re_password" name="re_password" placeholder="Re-Insert Password" required>
+        </div>
+        <div class="form-group">
+          <label for="fullname">Full Name</label>
+          <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Insert Fullname" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <% include ./partials/footer %>
+  </body>
+</html>
