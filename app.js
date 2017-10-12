@@ -33,6 +33,16 @@ app.use(express.static(__dirname + '/public'));
 app.use('/', index);
 app.use('/auth', auth);
 app.use('/users', user);
+
+app.use(function(req, res, next) {
+  res.status(404)
+    .render("404", {
+      title: 'Page Not Found',
+      page: 'home-nav',
+      session: req.session,
+    })
+})
+
 app.listen(process.env.PORT || 3000, () => {
   console.log('Hello from port: 3000');
 });
